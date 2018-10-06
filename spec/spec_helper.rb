@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "macos_dev_please"
+require "ms-devops"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

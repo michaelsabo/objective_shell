@@ -1,3 +1,3 @@
-module MacosDevPlease
+module MsDevops
   VERSION = "0.1.0"
 end

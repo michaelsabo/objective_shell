@@ -1,6 +1,6 @@
-RSpec.describe MacosDevPlease do
+RSpec.describe MsDevops do
   it "has a version number" do
-    expect(MacosDevPlease::VERSION).not_to be nil
+    expect(MsDevops::VERSION).not_to be nil
   end
 
   it "does something useful" do

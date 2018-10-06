@@ -1,4 +1,4 @@
-# MacosDevPlease
+# MsDevPlease
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/macos_dev_please`. To experiment with that code, run `bin/console` for an interactive prompt.
 
@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'macos_dev_please'
+gem 'ms_dev_please'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install macos_dev_please
+    $ gem install ms_dev_please
 
 ## Usage
 
@@ -40,4 +40,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the MacosDevPlease project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/macos_dev_please/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the MsDevPlease project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/macos_dev_please/blob/master/CODE_OF_CONDUCT.md).

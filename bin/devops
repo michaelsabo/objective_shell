@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+require 'dotenv'
+@env = Dotenv.load('./lib/.env')
+$LOAD_PATH.unshift File.dirname(__FILE__) + "/../lib"
+
+# -Xfrontend -warn-long-function-bodies=100
+#-Xfrontend -warn-long-expression-type-checking=100
+# -Xfrontend -debug-time-compilation
+# -debug-time-function-bodies
+
+# xcodebuild -workspace Ham-Supplies.xcworkspace -scheme Ham-Supplies clean build OTHER_SWIFT_FLAGS="-Xfrontend -debug-time-function-bodies" | grep .[0-9]ms | grep -v ^0.[0-9]ms | sort -nr > culprits.txt
+require "fileutils"
+require "rubygems"
+require "optparse"
+
+require "ms-devops"
+
+# cmd = ARGV.shift
+
+options = {
+  open_xcode: false,
+  do_nothing: false,
+}
+
+#SET Working Directory of current process invoking this file
+wd = Dir.getwd
+
+local_dev_script_directory = ENV['GEM_DEV_SCRIPTS_DIRECTORY']
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: xc [options]"
+
+  opts.on("-a", "--add-script", "Add script to devops gem") do |script|
+    options[:add_script] = true
+    options[:script] = script
+  end
+end.parse!
+
+if options[:add_script]
+  
+  if File.exist?(options[:script]) && Dir.new(script).pos == 0
+    script_path = wd + options[:script]
+    if File.exist?("#{local_dev_script_directory}/#{options[:script]}")
+      FileUtils.cp(options[:script], local_dev_script_directory)
+    else
+      p "File with that name already exists"
+    end
+  end
+end

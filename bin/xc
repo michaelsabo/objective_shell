@@ -1,42 +1,42 @@
 #!/usr/bin/env ruby
 
 $LOAD_PATH.unshift File.dirname(__FILE__) + "/../lib"
+require 'dotenv'
+@env = Dotenv.load('./lib/.env')
 
-# -Xfrontend -warn-long-function-bodies=100
-#-Xfrontend -warn-long-expression-type-checking=100
-# -Xfrontend -debug-time-compilation
-# -debug-time-function-bodies
-
-# xcodebuild -workspace Ham-Supplies.xcworkspace -scheme Ham-Supplies clean build OTHER_SWIFT_FLAGS="-Xfrontend -debug-time-function-bodies" | grep .[0-9]ms | grep -v ^0.[0-9]ms | sort -nr > culprits.txt
 require "fileutils"
 require "rubygems"
 require "optparse"
 
-require "macos_dev_please"
+require "ms-devops"
 
+# config = MsDevops::Configuration.new
+# MsDevops.configuration = config
+logger = MsDevops::Logger.new
+# end
 # cmd = ARGV.shift
-
+MsDevops.configuration
+p `printenv`
 options = {
-    open_xcode: false,
-    do_nothing: false
+  open_xcode: false,
+  do_nothing: false,
 }
-
+logger.log(MsDevops.configuration.gem_local_dev_scripts)
 OptionParser.new do |opts|
-    opts.banner = "Usage: xc [options]"
-  
-    opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-      options[:verbose] = v
-    end
+  opts.banner = "Usage: xc [options]"
 
-    opts.on("-o", "--open", "Open xcworkspace or project") do |v|
-        options[:open_xcode] = true
-      end
-  end.parse!
-  
-  puts options
-  puts ARGV
+  opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+    options[:verbose] = v
+  end
+
+  opts.on("-o", "--open", "Open xcworkspace or project") do |v|
+    options[:open_xcode] = true
+  end
+end.parse!
+
+puts options
+puts ARGV
 
 if options[:open_xcode]
-    MacosDevPlease.open_xcode
+  MsDevops.open_xcode
 end
-
