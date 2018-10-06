@@ -12,8 +12,7 @@ $LOAD_PATH.unshift File.dirname(__FILE__) + "/../lib"
 require "fileutils"
 require "rubygems"
 require "optparse"
-
-require "ms-devops"
+require "objective_shell"
 
 # cmd = ARGV.shift
 
@@ -21,29 +20,51 @@ options = {
   open_xcode: false,
   do_nothing: false,
 }
-
+log = ObjectiveShell.log
 #SET Working Directory of current process invoking this file
 wd = Dir.getwd
+
+log.debug(wd)
 
 local_dev_script_directory = ENV['GEM_DEV_SCRIPTS_DIRECTORY']
 
 OptionParser.new do |opts|
   opts.banner = "Usage: xc [options]"
 
-  opts.on("-a", "--add-script", "Add script to devops gem") do |script|
+  opts.on("-a", "--add-script file", "Add script to devops gem") do |file|
     options[:add_script] = true
-    options[:script] = script
+    options[:script] = file
   end
 end.parse!
 
-if options[:add_script]
-  
-  if File.exist?(options[:script]) && Dir.new(script).pos == 0
-    script_path = wd + options[:script]
-    if File.exist?("#{local_dev_script_directory}/#{options[:script]}")
-      FileUtils.cp(options[:script], local_dev_script_directory)
+log.info options
+
+if options[:add_script] && File.exist?(options[:script])
+  script_path = options[:script]
+  is_dir = Dir.exist?(script_path)
+  script_name = script_path.split("/").last
+  log.debug is_dir
+  unless script_name.nil? || script_name.empty? 
+    if is_dir
+      script_path = Dir.pwd + script_path
+      log.info script_path
+      raise "File path could not be built" if !File.exist?(script_path)
+    end
+    scripts = Dir.glob("#{local_dev_script_directory}/**/*")
+    log.debug scripts
+    log.info script_name
+    found = scripts.select { |f| f.split("/").last.include?(script_name) }.count > 0
+    log.debug found
+    if !found
+      FileUtils.cp(script_path, local_dev_script_directory)
+      Dir.glob("#{local_dev_script_directory}/**/*").select do |f|
+          if f.include?(script_name) 
+            log.debug `chmod +x #{f}`
+            log.success "Successfully copied file to git repo"
+          end
+      end
     else
-      p "File with that name already exists"
+      log.error "File with that name already exists"
     end
   end
 end

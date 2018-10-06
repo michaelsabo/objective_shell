@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "ms-devops"
+require "objective_shell"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

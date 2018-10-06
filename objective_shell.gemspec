@@ -1,11 +1,11 @@
 lib = File.expand_path("../lib", __FILE__)
 ruby_files = Dir.glob("lib/**/*.rb")
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "ms-devops/version"
+require "objective_shell/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "ms-devops"
-  spec.version = MsDevops::VERSION
+  spec.name = "objective_shell"
+  spec.version = ObjectiveShell::VERSION
   spec.authors = ["Mike Sabo"]
   spec.email = ["mike@mikesabo.com"]
 
@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   #   `git ls - files - z`.split("\x0").reject { | f | f.match( % r {^(test | spec | features)/})}
   # end
   spec.bindir = "bin"
-  spec.executables << "xc" #spec.files.grep( % r {^exe/}) { | f | File.basename(f)}
+  spec.executables = [spec.executables << "xc", "devops", "obshell"].flatten #spec.files.grep( % r {^exe/}) { | f | File.basename(f)}
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.16"

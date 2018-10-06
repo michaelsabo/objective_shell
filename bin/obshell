@@ -2,7 +2,7 @@
 require 'dotenv'
 @env = Dotenv.load('./lib/.env')
 require "bundler/setup"
-require "ms-devops"
+require "objective_shell"
 
 p ENV["GEM_DEV_DIRECTORY"]
 p ENV["GEM_DEV_DIRECTORY"]

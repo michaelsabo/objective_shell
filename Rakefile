@@ -20,3 +20,13 @@ end
 
 task :install do
 end
+
+task :uninstall do 
+  p `gem uninstall objective_shell -x`
+end
+
+task :rcfile do 
+  osrc_file = Dir.glob("osrc.env").first
+  raise "No file found" if osrc_file.nil? || osrc_file.empty?
+  FileUtils.cp(osrc_file, ENV['HOME'])
+end

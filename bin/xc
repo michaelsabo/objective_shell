@@ -1,27 +1,18 @@
 #!/usr/bin/env ruby
 
 $LOAD_PATH.unshift File.dirname(__FILE__) + "/../lib"
-require 'dotenv'
-@env = Dotenv.load('./lib/.env')
-
+require "objective_shell"
 require "fileutils"
 require "rubygems"
 require "optparse"
 
-require "ms-devops"
 
-# config = MsDevops::Configuration.new
-# MsDevops.configuration = config
-logger = MsDevops::Logger.new
-# end
-# cmd = ARGV.shift
-MsDevops.configuration
-p `printenv`
 options = {
   open_xcode: false,
   do_nothing: false,
 }
-logger.log(MsDevops.configuration.gem_local_dev_scripts)
+# logger = ObjectiveShell.logger
+# logger.info(ObjectiveShell.configuration.gem_local_dev_scripts)
 OptionParser.new do |opts|
   opts.banner = "Usage: xc [options]"
 
@@ -38,5 +29,5 @@ puts options
 puts ARGV
 
 if options[:open_xcode]
-  MsDevops.open_xcode
+  ObjectiveShell::Xcode.open
 end
