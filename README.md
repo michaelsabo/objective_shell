@@ -1,24 +1,16 @@
-# MsDevPlease
+# Objective Shell
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/objective_shell`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A dumping ground for commands I didn't want to write in bash. 
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Clone it, rake it, be done with it
 
-```ruby
-gem 'objective_shell'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install objective_shell
+    git clone https://github.com/michaelsabo/objective_shell.git
+    cd objective_shell
+    bundle install
+    rake build
+    rake install
 
 ## Usage
 
