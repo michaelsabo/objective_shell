@@ -2,12 +2,17 @@ require "objective_shell"
 
 module ObjectiveShell
   class Xcode
-    
-    def self.open
-      dir = Dir.pwd
-      files = Dir.glob("*.xc*")
-      puts "No project or workspace file found" if files.empty?
+    def self.dir_has_xc?
+      Dir.glob("*.xc*").count > 0
+    end
 
+    def self.xc_files_in_pwd
+      Dir.glob("*.xc*")
+    end
+
+    def self.open
+      puts "No project or workspace file found in current directory"; return if !dir_has_xc?
+      files = xc_files_in_pwd
       workspace = files.select { |f| f.include?("xcworkspace") }
       system("open #{workspace.first}") if !workspace.nil? || !workspace.empty?
       system("open #{files.first}") if files.count == 1

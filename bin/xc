@@ -6,18 +6,24 @@ require "fileutils"
 require "rubygems"
 require "optparse"
 
+DERIVED_DATA = "#{ENV["HOME"]}/Library/Developer/Xcode/DerivedData"
 
 options = {
   open_xcode: false,
   do_nothing: false,
+  delete_derived_data: false,
+  fastlane_test: false,
 }
-# logger = ObjectiveShell.logger
-# logger.info(ObjectiveShell.configuration.gem_local_dev_scripts)
+logger = ObjectiveShell.logger
 OptionParser.new do |opts|
   opts.banner = "Usage: xc [options]"
 
-  opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-    options[:verbose] = v
+  opts.on("-t", "--fastlane-test", "Run fastlane test, without typing bundle exec etc...") do |v|
+    options[:fastlane_test] = true
+  end
+
+  opts.on("-d", "--delete-deriveddata", "Delete common xcode files; valid all dd (derived data)") do |v|
+    options[:delete_derived_data] = true
   end
 
   opts.on("-o", "--open", "Open xcworkspace or project") do |v|
@@ -28,6 +34,15 @@ end.parse!
 puts options
 puts ARGV
 
+if options[:delete_derived_data]
+  modules = Dir.glob("#{DERIVED_DATA}/*")
+  modules.each { |folder| logger.info "Removing #{FileUtils.rm_rf(folder)}"  }
+end
+
 if options[:open_xcode]
   ObjectiveShell::Xcode.open
 end
+
+# if options[:fastlane_test]
+#   ObjectiveShell::Xcode.has
+# end

@@ -1,8 +1,47 @@
 #!/usr/bin/env ruby
-require 'dotenv'
-@env = Dotenv.load('./lib/.env')
-require "bundler/setup"
+require "dotenv"
+@env = Dotenv.load("./lib/.env")
+$LOAD_PATH.unshift File.dirname(__FILE__) + "/../lib"
+
+# -Xfrontend -warn-long-function-bodies=100
+#-Xfrontend -warn-long-expression-type-checking=100
+# -Xfrontend -debug-time-compilation
+# -debug-time-function-bodies
+
+# xcodebuild -workspace Ham-Supplies.xcworkspace -scheme Ham-Supplies clean build OTHER_SWIFT_FLAGS="-Xfrontend -debug-time-function-bodies" | grep .[0-9]ms | grep -v ^0.[0-9]ms | sort -nr > culprits.txt
+require "fileutils"
+require "rubygems"
+require "optparse"
 require "objective_shell"
 
-p ENV["GEM_DEV_DIRECTORY"]
-p ENV["GEM_DEV_DIRECTORY"]
+# cmd = ARGV.shift
+
+options = {
+  search_logs: "",
+  show_context_in_results: 0,
+}
+log = ObjectiveShell.log
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: xc [options]"
+
+  opts.on("-s", "--search-logs name", "Search .logs directory for x") do |name|
+    options[:search_logs] = name
+  end
+  
+  opts.on("-s", "--search-logs name", "Search .logs directory for x") do |name|
+    options[:search_logs] = name
+  end
+
+  opts.on("-c", "--show-context n", "Show n number of lines around results") do |n|
+    options[:show_context_in_results] = n.to_i
+  end
+end.parse!
+
+if !options[:search_logs].empty?
+  Dir.chdir(Dir.home)
+  search = system("grep -aRi -C #{options[:show_context_in_results]} \"#{options[:search_logs]}\" ./.logs")
+  log.info search
+end
+
+log.info options

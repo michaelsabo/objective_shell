@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    objective_shell (0.1.1)
+    objective_shell (0.1.2)
       awesome_print
       dotenv (= 2.5.0)
 
