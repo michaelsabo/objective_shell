@@ -38,6 +38,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "yard"
   spec.add_development_dependency "simplecov"
-  spec.add_dependency "dotenv", "2.5.0"
+  spec.add_dependency "dotenv", "2.7.5"
   spec.add_dependency "awesome_print"
 end
